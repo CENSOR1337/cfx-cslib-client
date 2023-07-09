@@ -4,29 +4,22 @@ import { CFXEventData } from "@fivemjs/shared";
 
 function triggerServerCallback<T>(eventName: string, ...args: any[]): Promise<T> {
 	const cbId = randomUUID();
-	const cbEventName = `cslib:svcb:${cbId}`;
 	const promise = new Promise<T>((resolve, reject) => {
-		Event.onServer(cbEventName, (data: any) => {
+		Event.onServer(cbId, (data: any) => {
 			resolve(data as T);
 		});
 	});
-	Event.emitServer(eventName, cbId, ...args);
+	Event.emitServer(`cslib:svcb:${eventName}`, cbId, ...args);
 	return promise;
 }
 
 function registerClientCallback(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-	return Event.onServer(eventName, (cbId: string, ...args: any[]) => {
-		const cbEventName = `cslib:clcb:${cbId}`;
-		Event.emitServer(cbEventName, handler(...args));
+	return Event.onServer(`cslib:clcb:${eventName}`, (cbId: string, ...args: any[]) => {
+		Event.emitServer(cbId, handler(...args));
 	});
 }
 
 export class Callback {
-	public static emit(eventName: string, ...args: any[]): Promise<any[]> {
-		return triggerServerCallback(eventName, ...args);
-	}
-
-	public static register(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-		return registerClientCallback(eventName, handler);
-	}
+	public static emit = triggerServerCallback;
+	public static register = registerClientCallback;
 }
