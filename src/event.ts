@@ -15,9 +15,9 @@ export class Event extends EventShared {
 
 	public static onceServer(eventName: string, listener: listener): CFXEventData {
 		let eventData: CFXEventData;
-		eventData = this.onServer(eventName, (...args: any[]) => {
+		eventData = Event.onServer(eventName, (...args: any[]) => {
 			listener(...args);
-			this.off(eventData);
+			Event.off(eventData);
 		});
 		return eventData;
 	}
