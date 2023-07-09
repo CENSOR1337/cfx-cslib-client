@@ -1,24 +1,23 @@
 import { randomUUID } from "./uuid";
-import { once, onceNet, onNet } from "@fivemjs/shared";
-import { emitServer } from "./event";
+import { Event } from "./event";
 import { CFXEventData } from "@fivemjs/shared";
 
 function triggerServerCallback(eventName: string, ...args: any[]): Promise<any[]> {
 	const cbId = randomUUID();
 	const cbEventName = `cslib:svcb:${cbId}`;
 	const promise = new Promise<any[]>((resolve, reject) => {
-		onceNet(cbEventName, (...cbArgs: any[]) => {
+		Event.onServer(cbEventName, (...cbArgs: any[]) => {
 			resolve(cbArgs);
 		});
 	});
-	emitServer(eventName, cbId, ...args);
+	Event.emitServer(eventName, cbId, ...args);
 	return promise;
 }
 
-function registerClientCallback(eventName: string, handler: (...args: any[]) => void) {
+function registerClientCallback(eventName: string, handler: (...args: any[]) => void): CFXEventData {
 	const cbEventName = `cslib:clcb:${eventName}`;
-	return onNet(cbEventName, (cbId: string, ...args: any[]) => {
-		emitServer(`${cbEventName}${cbId}`, handler(...args));
+	return Event.onServer(cbEventName, (cbId: string, ...args: any[]) => {
+		Event.emitServer(`${cbEventName}${cbId}`, handler(...args));
 	});
 }
 
