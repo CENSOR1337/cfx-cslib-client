@@ -13,7 +13,7 @@ export class CollisionSphere extends Collision {
 	}
 
 	protected isEntityInside(entity: number) {
-		const position = Vector3.fromArray(GetEntityCoords(entity));
+		const position = Vector3.fromArray(GetEntityCoords(entity, false));
 		return this.isPosInside(position);
 	}
 }
