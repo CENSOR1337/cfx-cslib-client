@@ -5,17 +5,15 @@ export class Event extends EventShared {
 	public static emitServer(eventName: string, ...args: any[]): void {
 		return Cfx.triggerServerEvent(eventName, ...args);
 	}
-
+ 
 	public static onServer(eventName: string, listener: (...args: any[]) => void): CFXEventData {
 		Cfx.addNetEventListener(eventName, listener);
-		return {
-			eventName,
-			listener: listener,
-		} as CFXEventData;
+		return { eventName, listener } as CFXEventData;
 	}
 
 	public static onceServer(eventName: string, listener: (...args: any[]) => void): CFXEventData {
-		const eventData = this.onServer(eventName, (...args: any[]) => {
+		let eventData: CFXEventData;
+		eventData = this.onServer(eventName, (...args: any[]) => {
 			listener(...args);
 			this.off(eventData);
 		});
