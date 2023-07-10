@@ -1,4 +1,4 @@
-import { Event as EventShared, Cfx } from "@fivemjs/shared";
+import { Event as EventShared, Citizen } from "@fivemjs/shared";
 import { CFXEventData } from "@fivemjs/shared";
 import { listenerType } from "@fivemjs/shared";
 
@@ -8,11 +8,11 @@ export class Event extends EventShared {
 	}
 
 	public static emitServer(eventName: string, ...args: any[]): void {
-		return Cfx.triggerServerEvent(eventName, ...args);
+		return Citizen.triggerServerEvent(eventName, ...args);
 	}
 
 	public static onServer(eventName: string, listener: listenerType): CFXEventData {
-		Cfx.addNetEventListener(eventName, listener);
+		Citizen.addNetEventListener(eventName, listener);
 		return { eventName, listener } as CFXEventData;
 	}
 
