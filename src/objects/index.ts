@@ -1,1 +1,1 @@
-export { VirtualEntityObject  } from "./VirtualEntity";
+export { VirtualEntity } from "./VirtualEntity";
