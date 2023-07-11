@@ -1,1 +1,1 @@
-# fivem-cslib-js
+# @fivemjs/client
