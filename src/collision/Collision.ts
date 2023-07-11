@@ -3,10 +3,9 @@ import { Collision as CollisionBase } from "@fivemjs/shared";
 import { randomUUID } from "../uuid";
 
 export class Collision extends CollisionBase {
-	readonly id = randomUUID();
-
 	constructor(pos: Vector3) {
-		super(pos);
+		const id = randomUUID();
+		super(id, pos);
 	}
 
 	protected isEntityValid(entity: number) {
