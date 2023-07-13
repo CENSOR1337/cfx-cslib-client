@@ -1,5 +1,8 @@
 function internalRequest(classObj: any, requestFunction: Function, ...args: any[]): Promise<void> {
 	return new Promise(async (resolve, reject) => {
+        if (classObj.hasLoaded(...args)) {
+            resolve();
+        }
 		if (classObj.isValid(...args)) {
 			requestFunction(...args);
 			while (!classObj.hasLoaded(...args)) {
