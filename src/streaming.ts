@@ -1,17 +1,20 @@
-export class StreamingModel {
+function internalRequest(classObj: any, requestFunction: Function, ...args: any[]): Promise<void> {
+	return new Promise(async (resolve, reject) => {
+		if (classObj.isValid(...args)) {
+			requestFunction(...args);
+			while (!classObj.hasLoaded(...args)) {
+				await new Promise((resolve) => setTimeout(resolve, 100));
+			}
+			resolve();
+		} else {
+			reject(`${classObj.constructor.name}, ${args} is not valid`);
+		}
+	});
+}
+class StreamingModel {
 	public static request(modelHash: string | number): Promise<void> {
 		const hash = typeof modelHash === "string" ? GetHashKey(modelHash) : modelHash;
-		return new Promise(async (resolve, reject) => {
-			if (StreamingModel.isValid(hash)) {
-				RequestModel(hash);
-				while (!StreamingModel.hasLoaded(hash)) {
-					await new Promise((resolve) => setTimeout(resolve, 100));
-				}
-				resolve();
-			} else {
-				reject("Model is not valid");
-			}
-		});
+		return internalRequest(StreamingModel, RequestModel, hash);
 	}
 
 	public static remove(modelHash: number): void {
@@ -27,19 +30,9 @@ export class StreamingModel {
 	}
 }
 
-class AnimDict {
+class Anim {
 	public static request(dict: string): Promise<void> {
-		return new Promise(async (resolve, reject) => {
-			if (AnimDict.hasLoaded(dict)) {
-				resolve();
-			} else {
-				RequestAnimDict(dict);
-				while (!AnimDict.hasLoaded(dict)) {
-					await new Promise((resolve) => setTimeout(resolve, 100));
-				}
-				resolve();
-			}
-		});
+		return internalRequest(Anim, RequestAnimDict, dict);
 	}
 
 	public static remove(dict: string): void {
@@ -57,5 +50,5 @@ class AnimDict {
 
 export class Streaming {
 	public static Model = StreamingModel;
-	public static AnimDict = AnimDict;
+	public static Anim = Anim;
 }
