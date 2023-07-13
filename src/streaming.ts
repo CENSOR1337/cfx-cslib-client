@@ -48,7 +48,26 @@ class Anim {
 	}
 }
 
+class Ptfx {
+	public static request(fxName: string): Promise<void> {
+		return internalRequest(Ptfx, RequestNamedPtfxAsset, fxName);
+	}
+
+	public static remove(fxName: string): void {
+		RemoveNamedPtfxAsset(fxName);
+	}
+
+	public static hasLoaded(fxName: string): boolean {
+		return HasNamedPtfxAssetLoaded(fxName);
+	}
+
+	public static isValid(fxName: string): boolean {
+		return true; // Can't find a native for this
+	}
+}
+
 export class Streaming {
 	public static Model = StreamingModel;
 	public static Anim = Anim;
+	public static Ptfx = Ptfx;
 }
