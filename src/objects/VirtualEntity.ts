@@ -16,8 +16,8 @@ export class VirtualEntity extends SharedVirtualEntity {
 		onStreamOut: new Dispatcher(),
 	};
 
-	protected constructor(VirtualEntityType: string, id: string, pos: Vector3, syncedMeta: Record<string, any>) {
-		super(VirtualEntityType, pos);
+	protected constructor(id: string, pos: Vector3, syncedMeta: Record<string, any>) {
+		super(pos);
 		this.id = id;
 		this.pos = new Vector3(pos.x, pos.y, pos.z);
 		this.syncedMeta = syncedMeta;
@@ -49,15 +49,15 @@ export class VirtualEntity extends SharedVirtualEntity {
 		return VirtualEntity.instances.get(id);
 	}
 
-	public static initialize(virtualEntityType: string, classObject: any) {
-		const handlerObject = new SharedVirtualEntity(virtualEntityType, new Vector3(0, 0, 0));
-
+	public static initialize(classObject: any) {
+		const handlerObject = new classObject(new Vector3(0, 0, 0), {});
+        
 		Resource.onServer(handlerObject.event.onVirtualEntityStreamIn, function (veObject: any) {
 			const id = veObject.id;
 			const pos = veObject.pos;
 			const syncedMeta = veObject.syncedMeta;
 			if (VirtualEntity.instances.get(id)) return;
-			const instance = new classObject(virtualEntityType, id, pos, syncedMeta);
+			const instance = new classObject(id, pos, syncedMeta);
 			instance.onStreamIn();
 		});
 
