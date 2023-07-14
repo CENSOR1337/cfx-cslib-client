@@ -1,4 +1,4 @@
-import { Event as EventShared, Citizen } from "@fivemjs/shared";
+import { Events as EventShared, Citizen } from "@fivemjs/shared";
 import { CFXEventData } from "@fivemjs/shared";
 import { listenerType } from "@fivemjs/shared";
 import { VirtualEntity } from "./VirtualEntity";
