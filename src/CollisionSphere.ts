@@ -1,5 +1,5 @@
-import { Collision } from "./Collision";
 import { Vector3 } from "@fivemjs/shared";
+import { Collision } from "./Collision";
 
 export class CollisionSphere extends Collision {
 	radius: number;
