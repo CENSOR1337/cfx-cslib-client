@@ -1,6 +1,7 @@
 import { Vector3 } from "@fivemjs/shared";
 import { Dispatcher } from "@fivemjs/shared";
 import { Streaming } from "../streaming";
+import { EntityNative } from "@fivemjs/shared";
 
 export enum EntityType {
 	Object = "object",
@@ -8,43 +9,58 @@ export enum EntityType {
 	Vehicle = "vehicle",
 }
 
-export class LocalEntity {
-	private _id = 0;
-	public readonly hash: number;
-	public readonly pos: Vector3;
-	public readonly rot: Vector3;
+class EntityNativeClient extends EntityNative {
+	public get freeze(): boolean {
+		return IsEntityPositionFrozen(this.handle);
+	}
+
+	public set freeze(state: boolean) {
+		super.freeze = state;
+	}
+}
+
+export class LocalEntity extends EntityNativeClient {
+	//private handle = 0;
+	//public readonly hash: number;
+	//private pos = new Vector3(0, 0, 0);
+	//private rot = new Vector3(0, 0, 0);
 	public readonly type: EntityType;
 	private _isDestroyed: boolean = false;
 	public readonly onCreated = new Dispatcher();
 	public readonly onDestroyed = new Dispatcher();
 
 	constructor(modelHash: string | number, position: Vector3, rotation: Vector3, entityType: EntityType) {
-		this.hash = typeof modelHash === "string" ? GetHashKey(modelHash) : modelHash;
-		this.pos = position;
-		this.rot = rotation;
+		super(modelHash);
+		//this.pos = position;
+		//this.rot = rotation;
 		this.type = entityType;
-		this.createEntity();
+		this.createEntity(position, rotation);
 	}
 
 	public get isDestroyed(): boolean {
 		return this._isDestroyed;
 	}
+
 	public get id(): number {
-		return this._id;
+		return this.handle;
 	}
 
-	private async createEntity() {
+	public get valid(): boolean {
+		return DoesEntityExist(this.handle);
+	}
+
+	private async createEntity(position: Vector3, rotation: Vector3) {
 		await Streaming.Model.request(this.hash);
 		if (this.isDestroyed) return;
 		switch (this.type) {
 			case EntityType.Object:
-				this._id = CreateObjectNoOffset(this.hash, this.pos.x, this.pos.y, this.pos.z, false, false, false);
+				this.handle = CreateObjectNoOffset(this.hash, position.x, position.y, position.z, false, false, false);
 				break;
 			case EntityType.Ped:
-				this._id = CreatePed(4, this.hash, this.pos.x, this.pos.y, this.pos.z, this.rot.x, false, false);
+				this.handle = CreatePed(4, this.hash, position.x, position.y, position.z, rotation.x, false, false);
 				break;
 			case EntityType.Vehicle:
-				this._id = CreateVehicle(this.hash, this.pos.x, this.pos.y, this.pos.z, this.rot.x, false, false);
+				this.handle = CreateVehicle(this.hash, position.x, position.y, position.z, rotation.x, false, false);
 				break;
 			default:
 				throw new Error("Invalid entity type");
@@ -64,10 +80,6 @@ export class LocalEntity {
 				this.onCreated.remove(listener);
 			});
 		});
-	}
-
-	public get valid(): boolean {
-		return DoesEntityExist(this.id);
 	}
 
 	public destroy() {
