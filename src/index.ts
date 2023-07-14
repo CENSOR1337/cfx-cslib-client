@@ -6,5 +6,5 @@ export { Collision, CollisionSphere } from "./collision";
 export { Resource } from "./resource";
 export { Callback } from "./callback";
 export { Streaming } from "./streaming";
-export { LocalObject } from "./entity";
-export { VirtualEntity } from "./objects";
+export { LocalObject, LocalPed, LocalVehicle } from "./entity";
+export { VirtualEntity, Player } from "./objects";
