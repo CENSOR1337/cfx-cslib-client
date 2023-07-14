@@ -22,12 +22,10 @@ export class VirtualEntity extends SharedVirtualEntity {
 		this.pos = new Vector3(pos.x, pos.y, pos.z);
 		this.syncedMeta = syncedMeta;
 		this.events.push(Resource.onServer(this.event.onVirtualEntitySyncedMetaChange, this.onSyncedMetaChange.bind(this)));
+		if (id == "VE_TEMP_INSTANCE") return;
 		VirtualEntity.instances.set(this.id, this);
 		Resource.onResourceStop(this.destroy.bind(this));
 		this.onStreamIn();
-
-		if (id != "VE_TEMP_INSTANCE") return;
-		this.destroy();
 	}
 
 	protected onStreamIn() {} // implement this in your class
