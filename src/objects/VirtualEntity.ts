@@ -23,11 +23,16 @@ export class VirtualEntity extends SharedVirtualEntity {
 		this.syncedMeta = syncedMeta;
 		this.events.push(Resource.onServer(this.event.onVirtualEntitySyncedMetaChange, this.onSyncedMetaChange.bind(this)));
 		VirtualEntity.instances.set(this.id, this);
+		Resource.onResourceStop(this.destroy.bind(this));
+		this.onStreamIn();
+
+		if (id != "VE_TEMP_INSTANCE") return;
+		this.destroy();
 	}
 
-	public onStreamIn() {} // implement this in your class
+	protected onStreamIn() {} // implement this in your class
 
-	public onStreamOut() {} // implement this in your class
+	protected onStreamOut() {} // implement this in your class
 
 	public getSyncedMeta(key: string): any {
 		return this.syncedMeta[key];
@@ -39,6 +44,7 @@ export class VirtualEntity extends SharedVirtualEntity {
 	}
 
 	public destroy() {
+		this.onStreamOut();
 		this.events.forEach((event) => off(event));
 		VirtualEntity.instances.delete(this.id);
 	}
@@ -50,22 +56,19 @@ export class VirtualEntity extends SharedVirtualEntity {
 	}
 
 	public static initialize(classObject: any) {
-		const handlerObject = new classObject(new Vector3(0, 0, 0), {});
-        
+		const handlerObject = new classObject("VE_TEMP_INSTANCE", new Vector3(0, 0, 0), {});
 		Resource.onServer(handlerObject.event.onVirtualEntityStreamIn, function (veObject: any) {
 			const id = veObject.id;
 			const pos = veObject.pos;
 			const syncedMeta = veObject.syncedMeta;
 			if (VirtualEntity.instances.get(id)) return;
 			const instance = new classObject(id, pos, syncedMeta);
-			instance.onStreamIn();
 		});
 
 		Resource.onServer(handlerObject.event.onVirtualEntityStreamOut, function (veObject: any) {
 			const id = veObject.id;
 			const instance = VirtualEntity.instances.get(id);
 			if (!instance) return;
-			instance.onStreamOut();
 			instance.destroy();
 		});
 	}
