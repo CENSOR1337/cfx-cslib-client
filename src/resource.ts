@@ -1,6 +1,6 @@
 import { Resource as ResourceShared } from "@fivemjs/shared";
-import { Event } from "./event";
-import { Callback } from "./callback";
+import { Events } from "./Events";
+import { Callback } from "./Callback";
 import { CFXEventData } from "@fivemjs/shared";
 
 class ResourceCallback extends Callback {
@@ -17,22 +17,22 @@ export class Resource extends ResourceShared {
 	public static readonly Callback = ResourceCallback;
 
 	public static on(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-		return Event.on(this.getEventName(eventName), handler);
+		return Events.on(this.getEventName(eventName), handler);
 	}
 
 	public static once(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-		return Event.once(this.getEventName(eventName), handler);
+		return Events.once(this.getEventName(eventName), handler);
 	}
 
 	public static emitServer(eventName: string, ...args: any[]) {
-		return Event.emitServer(this.getEventName(eventName), ...args);
+		return Events.emitServer(this.getEventName(eventName), ...args);
 	}
 
 	public static onServer(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-		return Event.onServer(this.getEventName(eventName), handler);
+		return Events.onServer(this.getEventName(eventName), handler);
 	}
 
 	public static onceServer(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-		return Event.onceServer(this.getEventName(eventName), handler);
+		return Events.onceServer(this.getEventName(eventName), handler);
 	}
 }

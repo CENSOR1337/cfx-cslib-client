@@ -1,9 +1,9 @@
 import { Event as EventShared, Citizen } from "@fivemjs/shared";
 import { CFXEventData } from "@fivemjs/shared";
 import { listenerType } from "@fivemjs/shared";
-import { VirtualEntity } from "./objects";
+import { VirtualEntity } from "./VirtualEntity";
 
-export class Event extends EventShared {
+export class Events extends EventShared {
 	protected static getObjectClass(obj: any): any {
 		const objType = obj.type;
 		if (!objType) return obj;
@@ -28,30 +28,30 @@ export class Event extends EventShared {
 
 	public static onceServer(eventName: string, listener: listenerType): CFXEventData {
 		let eventData: CFXEventData;
-		eventData = Event.onServer(eventName, (...args: any[]) => {
+		eventData = Events.onServer(eventName, (...args: any[]) => {
 			listener(...args);
-			Event.off(eventData);
+			Events.off(eventData);
 		});
 		return eventData;
 	}
 
 	public static on(eventName: string, listener: listenerType): CFXEventData {
 		const handler = (...args: any[]) => {
-			listener(...Event.getClassFromArguments(...args));
+			listener(...Events.getClassFromArguments(...args));
 		};
 		return super.on(eventName, handler);
 	}
 
 	public static once(eventName: string, listener: listenerType): CFXEventData {
 		const handler = (...args: any[]) => {
-			listener(...Event.getClassFromArguments(...args));
+			listener(...Events.getClassFromArguments(...args));
 		};
 		return super.once(eventName, handler);
 	}
 }
 
-export const on = Event.on;
-export const once = Event.once;
-export const emitServer = Event.emitServer;
-export const onServer = Event.onServer;
-export const onceServer = Event.onceServer;
+export const on = Events.on;
+export const once = Events.once;
+export const emitServer = Events.emitServer;
+export const onServer = Events.onServer;
+export const onceServer = Events.onceServer;
