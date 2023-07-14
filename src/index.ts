@@ -1,11 +1,11 @@
 export * from "@fivemjs/shared";
 export * from "./Events";
-export * from "./uuid";
+export * from "./utils/uuid";
 export { Events as Event, on, once, onServer, onceServer, emitServer } from "./Events";
 export { Callback } from "./Callback";
 export { Collision } from "./Collision";
 export { CollisionSphere } from "./CollisionSphere";
-export { Resource } from "./resource";
+export { Resource } from "./Resource";
 export { Streaming } from "./Streaming";
 export { LocalObject } from "./LocalObject";
 export { LocalPed } from "./LocalPed";

@@ -1,4 +1,4 @@
-import { randomUUID } from "./uuid";
+import { randomUUID } from "./utils/uuid";
 import { Events } from "./Events";
 import { CFXEventData } from "@fivemjs/shared";
 import { Callback as CallbackShared } from "@fivemjs/shared";

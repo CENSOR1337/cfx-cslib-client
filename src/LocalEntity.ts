@@ -1,6 +1,6 @@
 import { Vector3 } from "@fivemjs/shared";
 import { Dispatcher } from "@fivemjs/shared";
-import { Streaming } from "../Streaming";
+import { Streaming } from "./Streaming";
 import { EntityNative } from "@fivemjs/shared";
 
 export enum EntityType {

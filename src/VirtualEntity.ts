@@ -1,6 +1,6 @@
 import { Vector3 } from "@fivemjs/shared";
 import { VirtualEntity as SharedVirtualEntity } from "@fivemjs/shared";
-import { Resource } from "../resource";
+import { Resource } from "./Resource";
 import { off } from "@fivemjs/shared";
 import { CFXEventData } from "@fivemjs/shared";
 import { Dispatcher } from "@fivemjs/shared";

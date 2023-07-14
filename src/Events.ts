@@ -1,7 +1,7 @@
 import { Event as EventShared, Citizen } from "@fivemjs/shared";
 import { CFXEventData } from "@fivemjs/shared";
 import { listenerType } from "@fivemjs/shared";
-import { VirtualEntity } from "./objects";
+import { VirtualEntity } from "./VirtualEntity";
 
 export class Events extends EventShared {
 	protected static getObjectClass(obj: any): any {
