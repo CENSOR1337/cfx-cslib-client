@@ -1,4 +1,4 @@
-import { Vector3 } from "@fivemjs/shared";
+import { Vector3 } from "@cfx/client";
 import { Collision } from "./Collision";
 
 export class CollisionSphere extends Collision {

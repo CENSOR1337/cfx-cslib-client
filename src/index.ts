@@ -1,6 +1,5 @@
-export * from "@fivemjs/shared";
+export * from "@cfx-cslib/shared";
 export { randomUUID } from "./utils/uuid";
-export { Events, on, once, onServer, onceServer, emitServer } from "./Events";
 export { Callback } from "./Callback";
 export { Collision } from "./Collision";
 export { CollisionSphere } from "./CollisionSphere";

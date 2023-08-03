@@ -1,5 +1,5 @@
 import { LocalEntity } from "./LocalEntity";
-import { Vector3 } from "@fivemjs/shared";
+import { Vector3 } from "@cfx/client";
 import { EntityType } from "./LocalEntity";
 
 export class LocalVehicle extends LocalEntity {

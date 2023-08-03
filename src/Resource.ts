@@ -1,14 +1,13 @@
-import { Resource as ResourceShared } from "@fivemjs/shared";
-import { Events } from "./Events";
+import { Resource as ResourceShared } from "@cfx-cslib/shared";
+import { Event } from "@cfx/client";
 import { Callback } from "./Callback";
-import { CFXEventData } from "@fivemjs/shared";
 
 class ResourceCallback extends Callback {
 	public static emit<T>(eventName: string, ...args: any[]): Promise<T> {
 		return super.emit(Resource.getEventName(eventName), ...args);
 	}
 
-	public static register(eventName: string, handler: (...args: any[]) => void): CFXEventData {
+	public static register(eventName: string, handler: (...args: any[]) => void): Event {
 		return super.register(Resource.getEventName(eventName), handler);
 	}
 }
@@ -16,23 +15,23 @@ class ResourceCallback extends Callback {
 export class Resource extends ResourceShared {
 	public static readonly Callback = ResourceCallback;
 
-	public static on(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-		return Events.on(this.getEventName(eventName), handler);
+	public static on(eventName: string, handler: (...args: any[]) => void): Event {
+		return Event.on(this.getEventName(eventName), handler);
 	}
 
-	public static once(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-		return Events.once(this.getEventName(eventName), handler);
+	public static once(eventName: string, handler: (...args: any[]) => void): Event {
+		return Event.once(this.getEventName(eventName), handler);
 	}
 
 	public static emitServer(eventName: string, ...args: any[]) {
-		return Events.emitServer(this.getEventName(eventName), ...args);
+		return Event.emitServer(this.getEventName(eventName), ...args);
 	}
 
-	public static onServer(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-		return Events.onServer(this.getEventName(eventName), handler);
+	public static onServer(eventName: string, handler: (...args: any[]) => void): Event {
+		return Event.onServer(this.getEventName(eventName), handler);
 	}
 
-	public static onceServer(eventName: string, handler: (...args: any[]) => void): CFXEventData {
-		return Events.onceServer(this.getEventName(eventName), handler);
+	public static onceServer(eventName: string, handler: (...args: any[]) => void): Event {
+		return Event.onceServer(this.getEventName(eventName), handler);
 	}
 }
