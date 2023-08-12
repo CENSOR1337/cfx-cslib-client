@@ -7,8 +7,7 @@
             "es2021"
         ],
         "types": [
-            "@types/node",
-            "@citizenfx/client"
+            "@types/node"
         ],
         "declaration": true,
         "outDir": "./dist",

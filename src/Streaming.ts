@@ -1,8 +1,10 @@
+import * as natives from "@cfx/natives";
+
 function internalRequest(classObj: any, requestFunction: Function, ...args: any[]): Promise<void> {
 	return new Promise(async (resolve, reject) => {
-        if (classObj.hasLoaded(...args)) {
-            resolve();
-        }
+		if (classObj.hasLoaded(...args)) {
+			resolve();
+		}
 		if (classObj.isValid(...args)) {
 			requestFunction(...args);
 			while (!classObj.hasLoaded(...args)) {
@@ -21,15 +23,15 @@ class StreamingModel {
 	}
 
 	public static remove(modelHash: number): void {
-		SetModelAsNoLongerNeeded(modelHash);
+		natives.setModelAsNoLongerNeeded(modelHash);
 	}
 
 	public static hasLoaded(modelHash: number): boolean {
-		return HasModelLoaded(modelHash);
+		return natives.hasModelLoaded(modelHash);
 	}
 
 	public static isValid(modelHash: number): boolean {
-		return IsModelValid(modelHash);
+		return natives.isModelValid(modelHash);
 	}
 }
 
@@ -39,15 +41,15 @@ class Anim {
 	}
 
 	public static remove(dict: string): void {
-		RemoveAnimDict(dict);
+		natives.removeAnimDict(dict);
 	}
 
 	public static hasLoaded(dict: string): boolean {
-		return HasAnimDictLoaded(dict);
+		return natives.hasAnimDictLoaded(dict);
 	}
 
 	public static isValid(dict: string): boolean {
-		return DoesAnimDictExist(dict);
+		return natives.doesAnimDictExist(dict);
 	}
 }
 
@@ -57,11 +59,11 @@ class Ptfx {
 	}
 
 	public static remove(fxName: string): void {
-		RemoveNamedPtfxAsset(fxName);
+		natives.removeNamedPtfxAsset(fxName);
 	}
 
 	public static hasLoaded(fxName: string): boolean {
-		return HasNamedPtfxAssetLoaded(fxName);
+		return natives.hasNamedPtfxAssetLoaded(fxName);
 	}
 
 	public static isValid(fxName: string): boolean {

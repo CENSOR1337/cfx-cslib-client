@@ -1,5 +1,5 @@
 {
-	"name": "@fivemjs/client",
+	"name": "@cfx-cslib/client",
 	"main": "dist/index.js",
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -10,7 +10,6 @@
 	"author": "CENSOR_1337",
 	"license": "MIT",
 	"devDependencies": {
-		"@citizenfx/client": "latest",
 		"@types/node": "^20.4.0",
 		"typescript": "^5.1.6"
 	}

@@ -1,6 +1,7 @@
-import { Vector3 } from "@fivemjs/shared";
-import { Collision as CollisionBase } from "@fivemjs/shared";
+import { Vector3 } from "@cfx/client";
+import { Collision as CollisionBase } from "@cfx-cslib/shared";
 import { randomUUID } from "./utils/uuid";
+import * as natives from "@cfx/natives";
 
 export class Collision extends CollisionBase {
 	constructor(pos: Vector3) {
@@ -9,7 +10,7 @@ export class Collision extends CollisionBase {
 	}
 
 	protected isEntityValid(entity: number) {
-		if (!super.isEntityValid(entity)) return false;
+		if (!natives.doesEntityExist(entity)) return false;
 		return true;
 	}
 

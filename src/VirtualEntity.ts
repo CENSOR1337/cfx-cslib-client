@@ -1,16 +1,14 @@
-import { Vector3 } from "@fivemjs/shared";
-import { VirtualEntity as SharedVirtualEntity } from "@fivemjs/shared";
+import { Vector3, Event } from "@cfx/client";
 import { Resource } from "./Resource";
-import { off } from "@fivemjs/shared";
-import { CFXEventData } from "@fivemjs/shared";
-import { Dispatcher } from "@fivemjs/shared";
+import { VirtualEntity as SharedVirtualEntity } from "@cfx-cslib/shared";
+import { Dispatcher } from "@cfx-cslib/shared";
 
 export class VirtualEntity extends SharedVirtualEntity {
 	public static readonly instances = new Map<string, VirtualEntity>();
 	readonly id: string;
 	readonly pos: Vector3;
 	readonly syncedMeta: Record<string, any>;
-	readonly events = new Array<CFXEventData>();
+	readonly events = new Array<Event>();
 	private dispatchers = {
 		onStreamIn: new Dispatcher(),
 		onStreamOut: new Dispatcher(),
@@ -43,7 +41,7 @@ export class VirtualEntity extends SharedVirtualEntity {
 
 	public destroy() {
 		this.onStreamOut();
-		this.events.forEach((event) => off(event));
+		this.events.forEach((event) => event.destroy());
 		VirtualEntity.instances.delete(this.id);
 	}
 
