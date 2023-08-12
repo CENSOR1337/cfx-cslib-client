@@ -1,9 +1,9 @@
-# @fivemjs/client
+# @cslib/client
 
-@fivemjs is a collection of packages that make it easier to create FiveM resources using TypeScript/JavaScript.
+@cslib is a collection of packages that make it easier to create FiveM resources using TypeScript/JavaScript.
 
 ## related packages
 
-- [@fivemjs/client](https://github.com/CENSOR1337/fivemjs-client)
-- [@fivemjs/server](https://github.com/CENSOR1337/fivemjs-server)
-- [@fivemjs/shared](https://github.com/CENSOR1337/fivemjs-shared)
+- [@cslib/client](https://github.com/CENSOR1337/cslib-client)
+- [@cslib/server](https://github.com/CENSOR1337/cslib-server)
+- [@cslib/shared](https://github.com/CENSOR1337/cslib-shared)
