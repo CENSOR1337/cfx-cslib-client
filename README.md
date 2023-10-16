@@ -1,9 +1,7 @@
-# @cslib/client
+# This repo is now archived
 
-@cslib is a collection of packages that make it easier to create FiveM resources using TypeScript/JavaScript.
+## please visit related repo:
 
-## related packages
-
-- [@cslib/client](https://github.com/CENSOR1337/cslib-client)
-- [@cslib/server](https://github.com/CENSOR1337/cslib-server)
-- [@cslib/shared](https://github.com/CENSOR1337/cslib-shared)
+- [@censor1337/cfx-core](https://github.com/CENSOR1337/cfx-core-js)
+- [@censor1337/cfx-api](https://github.com/CENSOR1337/cfx-api-js)
+- [@censor1337/cslib](https://github.com/CENSOR1337/cfx-cslib-js)
